@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Álbum | Escúchalo Ahora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            500: '#3b82f6',
+                            accent: '#10b981'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .artist-circle {
+            transition: all 0.3s ease;
+        }
+        .artist-circle:hover {
+            transform: scale(1.1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .track-item {
+            transition: all 0.2s ease;
+        }
+        .track-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Modal / Menú flotante de plataformas */
+        #platform-modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .platform-btn {
+            transition: all 0.2s;
+        }
+        .platform-btn:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Ocultar barra de scroll en móviles para diseño más limpio */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 relative overflow-x-hidden text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Modal de Artistas (Oculto por defecto) -->
+    <div id="artist-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible transition-all duration-300">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl w-full max-w-sm transform scale-95 transition-transform duration-300" id="artist-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white" id="artist-modal-title">Redes Sociales</h3>
+                <button onclick="closeArtistModal()" class="text-slate-400 hover:text-white focus:outline-none transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Instagram -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#E1306C] group text-decoration-none">
+                    <i class="fab fa-instagram text-3xl mb-2 text-[#E1306C]"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Instagram</span>
+                </a>
+                
+                <!-- Twitter / X -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-white group text-decoration-none">
+                    <i class="fab fa-twitter text-3xl mb-2 text-white"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Twitter</span>
+                </a>
+                
+                <!-- TikTok -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00f2fe] group text-decoration-none">
+                    <i class="fab fa-tiktok text-3xl mb-2 text-white"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">TikTok</span>
+                </a>
+                
+                <!-- Spotify -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1DB954] group text-decoration-none">
+                    <i class="fab fa-spotify text-3xl mb-2 text-[#1DB954]"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Spotify</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Plataformas (Oculto por defecto) -->
+    <div id="platform-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl w-full max-w-sm transform scale-95 transition-transform duration-300" id="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white" id="modal-track-title">Selecciona plataforma</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white focus:outline-none transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Spotify -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1DB954] group text-decoration-none">
+                    <i class="fab fa-spotify text-3xl mb-2 text-[#1DB954]"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Spotify</span>
+                </a>
+                
+                <!-- Apple Music -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FA243C] group text-decoration-none">
+                    <i class="fab fa-apple text-3xl mb-2 text-white"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Apple Music</span>
+                </a>
+                
+                <!-- YouTube Music -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FF0000] group text-decoration-none">
+                    <i class="fab fa-youtube text-3xl mb-2 text-[#FF0000]"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">YouTube</span>
+                </a>
+                
+                <!-- Tidal -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-white group text-decoration-none">
+                    <svg viewBox="0 0 24 24" class="w-8 h-8 mb-2 fill-current text-white">
+                        <path d="M12.012 3.992L8.008 8l4.004 4.004 4.004-4.004-4.004-4.004zm-8.01 8.006L0 16.002l4.002 4.004 4.002-4.004-4.002-4.004zm16.016 0l-4.004 4.004 4.004 4.004 4.004-4.004-4.004-4.004zm-8.006 8.004l-4.004 4.004 4.004 4.004 4.004-4.004-4.004-4.004z"/>
+                    </svg>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Tidal</span>
+                </a>
+                
+                <!-- Amazon Music -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00A8E1] group text-decoration-none">
+                    <svg viewBox="0 0 24 24" class="w-8 h-8 mb-2 fill-current text-[#00A8E1]">
+                        <path d="M11.583 14.86c-.529.336-1.294.639-2.143.639-1.807 0-3.075-.924-3.075-2.714 0-1.94 1.479-2.773 3.596-2.714h1.538v-.924c0-.84-.26-1.462-1.462-1.462-.84 0-1.571.294-2.101.697l-.84-1.37c.731-.555 1.84-1.042 3.226-1.042 2.226 0 3.134 1.126 3.134 3.05v3.529c0 .74.202 1.244.47 1.588v.639h-1.806c-.143-.336-.235-.714-.294-1.11zm-1.538-3.067h-1.361c-1.05-.025-1.765.403-1.765 1.294 0 .815.622 1.26 1.462 1.26.79 0 1.37-.37 1.664-.84v-1.714zm10.083-2.31c0-1.866-.882-3.135-2.454-3.135-1.512 0-2.436.958-2.823 1.95v-1.85h-1.933v9.06h1.933v-4.942c0-1.294.756-1.916 1.596-1.916.924 0 1.513.622 1.513 1.68v5.178h1.933V9.482h.034c.067-1.126.857-1.849 1.781-1.849.924 0 1.58.588 1.58 1.68v5.178h1.932v-5.463c0-1.798-.874-3.135-2.437-3.135-1.126 0-1.983.588-2.47 1.563-.404-.975-1.31-1.563-2.454-1.563-1.008 0-1.815.487-2.285 1.277h-.017v-1.16H15.82v8.908h1.932v-4.942c0-1.294.756-1.916 1.597-1.916.924 0 1.512.622 1.512 1.68v5.178h1.933V9.482zM4.148 18.006c3.277 2.143 8.353 2.765 12.167 1.496-1.428 1.109-4.32 1.866-7.85 1.513-2.268-.227-4.486-1.126-5.713-2.353l1.395-.656z"/>
+                    </svg>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Amazon Music</span>
+                </a>
+                
+                <!-- Deezer -->
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#A238FF] group text-decoration-none">
+                    <i class="fab fa-deezer text-3xl mb-2 text-[#A238FF]"></i>
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Deezer</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal -->
+    <div class="w-full max-w-lg mx-auto z-10 flex flex-col gap-8">
+        
+        <!-- Header: Portada del Álbum y Título -->
+        <header class="text-center animate-float pt-4">
+            <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto mb-6">
+                <!-- Efecto de brillo detrás de la portada -->
+                <div class="absolute inset-0 bg-brand-500 rounded-2xl blur-xl opacity-30 animate-pulse-slow"></div>
+                <!-- Imagen de Portada -->
+                <img src="https://images.unsplash.com/photo-1619983081563-430f53602796?q=80&w=600&auto=format&fit=crop" 
+                     alt="Portada del Álbum" 
+                     class="relative w-full h-full object-cover rounded-2xl shadow-2xl border border-slate-700/50 z-10">
+            </div>
+            
+            <h1 class="text-4xl font-extrabold tracking-tight text-white mb-2">TÍTULO DEL ÁLBUM</h1>
+            <p class="text-lg text-slate-400 font-medium">Nombre de tu Banda / Proyecto</p>
+        </header>
+
+        <!-- Sección: Artistas Invitados (7 Círculos) -->
+        <section class="glass-panel p-6 rounded-3xl w-full">
+            <h2 class="text-sm uppercase tracking-widest text-slate-400 font-bold mb-5 text-center flex items-center justify-center gap-2">
+                <span class="w-8 h-[1px] bg-slate-600"></span>
+                Artistas
+                <span class="w-8 h-[1px] bg-slate-600"></span>
+            </h2>
+            
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                <!-- Artista 1 -->
+                <div onclick="openArtistModal('Just Cy')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="Just Cy" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Just Cy</span>
+                </div>
+                <!-- Artista 2 -->
+                <div onclick="openArtistModal('Jel Kaizen')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Jel Kaizen" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Jel Kaizen</span>
+                </div>
+                <!-- Artista 3 -->
+                <div onclick="openArtistModal('Vinze Tremaria')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?u=a04258114e29026702d" alt="Vinze Tremaria" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Vinze Tremaria</span>
+                </div>
+                <!-- Artista 4 -->
+                <div onclick="openArtistModal('Joivsami')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?u=a048581f4e29026701d" alt="Joivsami" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Joivsami</span>
+                </div>
+                <!-- Artista 5 -->
+                <div onclick="openArtistModal('Prodix')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?u=a04258a2462d826712d" alt="Prodix" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Prodix</span>
+                </div>
+                <!-- Artista 6 -->
+                <div onclick="openArtistModal('Almatrusko')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Almatrusko" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Almatrusko</span>
+                </div>
+                <!-- Artista 7 -->
+                <div onclick="openArtistModal('KVKR')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="https://i.pravatar.cc/150?img=33" alt="KVKR" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">KVKR</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Tracklist (7 Temas) -->
+        <section class="glass-panel p-2 sm:p-4 rounded-3xl w-full">
+            <h2 class="text-sm uppercase tracking-widest text-slate-400 font-bold mt-4 mb-4 text-center">Tracklist (Elige un tema)</h2>
+            
+            <div class="flex flex-col gap-1">
+                <!-- Tema 1 -->
+                <button onclick="openModal('1. Evil Moonlight')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">01</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Evil Moonlight</h4>
+                            <p class="text-xs text-slate-400">Just Cy</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">1:51</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+                <div class="w-full h-px bg-slate-800/50 mx-auto"></div>
+
+                <!-- Tema 2 -->
+                <button onclick="openModal('2. Forjar La Espada')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">02</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Forjar La Espada</h4>
+                            <p class="text-xs text-slate-400">Jel Kaizen & Vinze Tremaria</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">3:14</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+                <div class="w-full h-px bg-slate-800/50 mx-auto"></div>
+
+                <!-- Tema 3 -->
+                <button onclick="openModal('3. Jardín Del EdeM')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">03</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Jardín Del EdeM</h4>
+                            <p class="text-xs text-slate-400">Vinze Tremaria</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">3:53</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+                <div class="w-full h-px bg-slate-800/50 mx-auto"></div>
+
+                <!-- Tema 4 -->
+                <button onclick="openModal('4. Ocean Spiral')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">04</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Ocean Spiral</h4>
+                            <p class="text-xs text-slate-400">Joivsami</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">2:35</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+                <div class="w-full h-px bg-slate-800/50 mx-auto"></div>
+
+                <!-- Tema 5 -->
+                <button onclick="openModal('5. Inesperante')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">05</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Inesperante</h4>
+                            <p class="text-xs text-slate-400">Prodix</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">2:57</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+                <div class="w-full h-px bg-slate-800/50 mx-auto"></div>
+
+                <!-- Tema 6 -->
+                <button onclick="openModal('6. Sueño Tibetano')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">06</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Sueño Tibetano</h4>
+                            <p class="text-xs text-slate-400">Almatrusko</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">5:03</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+                <div class="w-full h-px bg-slate-800/50 mx-auto"></div>
+
+                <!-- Tema 7 -->
+                <button onclick="openModal('7. Seguir Fallando Para Crecer')" class="track-item flex items-center justify-between w-full p-4 rounded-xl text-left focus:outline-none">
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-500 font-mono text-sm">07</span>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Seguir Fallando Para Crecer</h4>
+                            <p class="text-xs text-slate-400">KVKR</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-slate-500 text-xs font-mono">6:15</span>
+                        <i class="fas fa-play-circle text-brand-500 text-xl opacity-70"></i>
+                    </div>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Footer simple -->
+        <footer class="text-center text-slate-500 text-xs pb-8">
+            <p>&copy; 2026 Nombre del Artista / Sello Discográfico.</p>
+            <div class="flex justify-center gap-4 mt-4">
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-tiktok text-xl"></i></a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const modal = document.getElementById('platform-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-track-title');
+
+        // Función para abrir el modal
+        function openModal(trackName) {
+            // Actualizar el título del modal con el nombre de la canción
+            modalTitle.textContent = "Escuchar: " + trackName.split('. ')[1]; // Toma solo el nombre, quitando el número
+
+            // Mostrar el modal (quitar clases que lo ocultan)
+            modal.classList.remove('opacity-0', 'invisible');
+            
+            // Animación de escala para el contenido
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+            
+            // Prevenir scroll en el body
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            // Animación de salida
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            // Ocultar modal después de la animación
+            setTimeout(() => {
+                modal.classList.add('opacity-0', 'invisible');
+                // Restaurar scroll en el body
+                document.body.style.overflow = '';
+            }, 200); // 200ms coincide con algo más rápido que la duración de transición
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // --- Lógica del Modal de Artistas ---
+        const artistModal = document.getElementById('artist-modal');
+        const artistModalContent = document.getElementById('artist-modal-content');
+        const artistModalTitle = document.getElementById('artist-modal-title');
+
+        // Función para abrir el modal de artista
+        function openArtistModal(artistName) {
+            artistModalTitle.textContent = artistName;
+            artistModal.classList.remove('opacity-0', 'invisible');
+            
+            setTimeout(() => {
+                artistModalContent.classList.remove('scale-95');
+                artistModalContent.classList.add('scale-100');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal de artista
+        function closeArtistModal() {
+            artistModalContent.classList.remove('scale-100');
+            artistModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                artistModal.classList.add('opacity-0', 'invisible');
+                // Restaurar scroll solo si el otro modal también está cerrado
+                if (modal.classList.contains('invisible')) {
+                    document.body.style.overflow = '';
+                }
+            }, 200);
+        }
+
+        // Cerrar modal de artista al hacer clic fuera
+        artistModal.addEventListener('click', function(event) {
+            if (event.target === artistModal) {
+                closeArtistModal();
+            }
+        });
+        
+        // Cerrar ambos modales con tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if (!modal.classList.contains('invisible')) closeModal();
+                if (!artistModal.classList.contains('invisible')) closeArtistModal();
+            }
+        });
+    </script>
+</body>
+</html>
