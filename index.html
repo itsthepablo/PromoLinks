@@ -97,7 +97,6 @@
             background: #475569; 
         }
 
-        /* Imagen grande en el modal */
         #artist-modal-img {
             width: 96px;
             height: 96px;
@@ -105,8 +104,6 @@
             border-radius: 50%;
             border: 3px solid #3b82f6;
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-            margin: 0 auto 1rem auto;
-            display: block;
         }
     </style>
 </head>
@@ -119,11 +116,12 @@
                 <i class="fas fa-times text-xl"></i>
             </button>
             
-            <!-- Imagen grande del artista -->
-            <img id="artist-modal-img" src="" alt="Artista" class="hidden">
-            <!-- Fallback silueta si no hay imagen -->
-            <div id="artist-modal-placeholder" class="hidden w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-4 border-3 border-brand-500 shadow-lg">
-                <i class="fas fa-user text-slate-300 text-4xl"></i>
+            <!-- Imagen del artista (se mostrará u ocultará dinámicamente) -->
+            <div id="artist-modal-image-container" class="mb-4">
+                <img id="artist-modal-img" src="" alt="Artista" class="hidden mx-auto">
+                <div id="artist-modal-placeholder" class="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center mx-auto border-3 border-brand-500 shadow-lg hidden">
+                    <i class="fas fa-user text-slate-300 text-4xl"></i>
+                </div>
             </div>
             
             <h3 class="text-xl font-bold text-white mb-6" id="artist-modal-title">Siga a ... en</h3>
@@ -248,17 +246,17 @@
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Prodix</span>
                 </div>
-                <!-- Almatrusko (silueta) -->
+                <!-- Almatrusko (ahora con foto) -->
                 <div onclick="openArtistModal('Almatrusko')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
-                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="almatrusko.jpg" alt="Almatrusko" class="w-full h-full object-cover">
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Almatrusko</span>
                 </div>
-                <!-- KVKR (silueta) -->
+                <!-- KVKR (ahora con foto) -->
                 <div onclick="openArtistModal('KVKR')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
-                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                        <img src="kvkr.jpg" alt="KVKR" class="w-full h-full object-cover">
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">KVKR</span>
                 </div>
@@ -412,23 +410,31 @@
         const artistModalImg = document.getElementById('artist-modal-img');
         const artistModalPlaceholder = document.getElementById('artist-modal-placeholder');
 
-        // Lista de artistas con foto (nombres en minúsculas)
-        const artistasConFoto = ['just cy', 'jel kaizen', 'vinze tremmaria', 'joivsami', 'prodix'];
+        // Lista de artistas con foto (nombres en minúsculas, sin tildes)
+        const artistasConFoto = [
+            'just cy',
+            'jel kaizen',
+            'vinze tremaria',   // corregido
+            'joivsami',
+            'prodix',
+            'almatrusko',
+            'kvkr'
+        ];
 
         function openArtistModal(artistName) {
-            // Actualizar título
             artistModalTitle.textContent = "Siga a " + artistName + " en";
             
-            // Determinar si tiene foto
             const nombreArchivo = artistName.toLowerCase().replace(/\s+/g, '') + '.jpg';
             const tieneFoto = artistasConFoto.includes(artistName.toLowerCase());
+            
+            // Ocultar ambos inicialmente
+            artistModalImg.classList.add('hidden');
+            artistModalPlaceholder.classList.add('hidden');
             
             if (tieneFoto) {
                 artistModalImg.src = nombreArchivo;
                 artistModalImg.classList.remove('hidden');
-                artistModalPlaceholder.classList.add('hidden');
             } else {
-                artistModalImg.classList.add('hidden');
                 artistModalPlaceholder.classList.remove('hidden');
             }
             
