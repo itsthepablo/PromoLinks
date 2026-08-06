@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Álbum | Escúchalo Ahora</title>
+    <title>Olbaiders | Escúchalo Ahora</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -202,14 +202,14 @@
             <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto mb-6">
                 <!-- Efecto de brillo detrás de la portada -->
                 <div class="absolute inset-0 bg-brand-500 rounded-2xl blur-xl opacity-30 animate-pulse-slow"></div>
-                <!-- Imagen de Portada -->
-                <img src="https://images.unsplash.com/photo-1619983081563-430f53602796?q=80&w=600&auto=format&fit=crop" 
-                     alt="Portada del Álbum" 
+                <!-- Imagen de Portada (AHORA USA TU ARCHIVO LOCAL) -->
+                <img src="portada.png" 
+                     alt="Portada del Álbum Olbaiders" 
                      class="relative w-full h-full object-cover rounded-2xl shadow-2xl border border-slate-700/50 z-10">
             </div>
             
-            <h1 class="text-4xl font-extrabold tracking-tight text-white mb-2">TÍTULO DEL ÁLBUM</h1>
-            <p class="text-lg text-slate-400 font-medium">Nombre de tu Banda / Proyecto</p>
+            <h1 class="text-4xl font-extrabold tracking-tight text-white mb-2">Olbaiders</h1>
+            <!-- Línea de banda/proyecto eliminada (queda vacío) -->
         </header>
 
         <!-- Sección: Artistas Invitados (7 Círculos) -->
@@ -223,50 +223,51 @@
             <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
                 <!-- Artista 1 -->
                 <div onclick="openArtistModal('Just Cy')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026024d" alt="Just Cy" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <!-- Silueta genérica -->
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Just Cy</span>
                 </div>
                 <!-- Artista 2 -->
                 <div onclick="openArtistModal('Jel Kaizen')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Jel Kaizen" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Jel Kaizen</span>
                 </div>
                 <!-- Artista 3 -->
                 <div onclick="openArtistModal('Vinze Tremaria')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?u=a04258114e29026702d" alt="Vinze Tremaria" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Vinze Tremaria</span>
                 </div>
                 <!-- Artista 4 -->
                 <div onclick="openArtistModal('Joivsami')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?u=a048581f4e29026701d" alt="Joivsami" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Joivsami</span>
                 </div>
                 <!-- Artista 5 -->
                 <div onclick="openArtistModal('Prodix')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?u=a04258a2462d826712d" alt="Prodix" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Prodix</span>
                 </div>
                 <!-- Artista 6 -->
                 <div onclick="openArtistModal('Almatrusko')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?img=11" alt="Almatrusko" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Almatrusko</span>
                 </div>
                 <!-- Artista 7 -->
                 <div onclick="openArtistModal('KVKR')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
-                        <img src="https://i.pravatar.cc/150?img=33" alt="KVKR" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
+                        <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">KVKR</span>
                 </div>
@@ -391,14 +392,9 @@
             </div>
         </section>
         
-        <!-- Footer simple -->
+        <!-- Footer simplificado: solo copyright -->
         <footer class="text-center text-slate-500 text-xs pb-8">
-            <p>&copy; 2026 Nombre del Artista / Sello Discográfico.</p>
-            <div class="flex justify-center gap-4 mt-4">
-                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-tiktok text-xl"></i></a>
-            </div>
+            <p>&copy; 2026 Olbaid Team</p>
         </footer>
 
     </div>
