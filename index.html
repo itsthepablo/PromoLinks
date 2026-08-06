@@ -220,11 +220,11 @@
                 <span class="w-8 h-[1px] bg-slate-600"></span>
             </h2>
             
-            <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+            <!-- Contenedor con ancho limitado para forzar 4 por fila y centrar los 3 restantes -->
+            <div class="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-[280px] sm:max-w-[340px] mx-auto">
                 <!-- Artista 1 -->
                 <div onclick="openArtistModal('Just Cy')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800 flex items-center justify-center">
-                        <!-- Silueta genérica -->
                         <i class="fas fa-user text-slate-300 text-xl sm:text-2xl"></i>
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Just Cy</span>
@@ -404,85 +404,58 @@
         const modalContent = document.getElementById('modal-content');
         const modalTitle = document.getElementById('modal-track-title');
 
-        // Función para abrir el modal
         function openModal(trackName) {
-            // Actualizar el título del modal con el nombre de la canción
-            modalTitle.textContent = "Escuchar: " + trackName.split('. ')[1]; // Toma solo el nombre, quitando el número
-
-            // Mostrar el modal (quitar clases que lo ocultan)
+            modalTitle.textContent = "Escuchar: " + trackName.split('. ')[1];
             modal.classList.remove('opacity-0', 'invisible');
-            
-            // Animación de escala para el contenido
             setTimeout(() => {
                 modalContent.classList.remove('scale-95');
                 modalContent.classList.add('scale-100');
             }, 10);
-            
-            // Prevenir scroll en el body
             document.body.style.overflow = 'hidden';
         }
 
-        // Función para cerrar el modal
         function closeModal() {
-            // Animación de salida
             modalContent.classList.remove('scale-100');
             modalContent.classList.add('scale-95');
-            
-            // Ocultar modal después de la animación
             setTimeout(() => {
                 modal.classList.add('opacity-0', 'invisible');
-                // Restaurar scroll en el body
                 document.body.style.overflow = '';
-            }, 200); // 200ms coincide con algo más rápido que la duración de transición
+            }, 200);
         }
 
-        // Cerrar modal al hacer clic fuera del contenido
         modal.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                closeModal();
-            }
+            if (event.target === modal) closeModal();
         });
         
-        // --- Lógica del Modal de Artistas ---
         const artistModal = document.getElementById('artist-modal');
         const artistModalContent = document.getElementById('artist-modal-content');
         const artistModalTitle = document.getElementById('artist-modal-title');
 
-        // Función para abrir el modal de artista
         function openArtistModal(artistName) {
             artistModalTitle.textContent = artistName;
             artistModal.classList.remove('opacity-0', 'invisible');
-            
             setTimeout(() => {
                 artistModalContent.classList.remove('scale-95');
                 artistModalContent.classList.add('scale-100');
             }, 10);
-            
             document.body.style.overflow = 'hidden';
         }
 
-        // Función para cerrar el modal de artista
         function closeArtistModal() {
             artistModalContent.classList.remove('scale-100');
             artistModalContent.classList.add('scale-95');
-            
             setTimeout(() => {
                 artistModal.classList.add('opacity-0', 'invisible');
-                // Restaurar scroll solo si el otro modal también está cerrado
                 if (modal.classList.contains('invisible')) {
                     document.body.style.overflow = '';
                 }
             }, 200);
         }
 
-        // Cerrar modal de artista al hacer clic fuera
         artistModal.addEventListener('click', function(event) {
-            if (event.target === artistModal) {
-                closeArtistModal();
-            }
+            if (event.target === artistModal) closeArtistModal();
         });
         
-        // Cerrar ambos modales con tecla ESC
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 if (!modal.classList.contains('invisible')) closeModal();
