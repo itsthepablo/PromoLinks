@@ -105,6 +105,18 @@
             border: 3px solid #3b82f6;
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
+        
+        .soundcloud-btn {
+            transition: all 0.3s ease;
+            background: rgba(255, 85, 0, 0.15);
+            border: 1px solid rgba(255, 85, 0, 0.3);
+        }
+        .soundcloud-btn:hover {
+            background: rgba(255, 85, 0, 0.25);
+            border-color: rgba(255, 85, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(255, 85, 0, 0.3);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 relative overflow-x-hidden text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
@@ -116,7 +128,6 @@
                 <i class="fas fa-times text-xl"></i>
             </button>
             
-            <!-- Imagen del artista -->
             <div id="artist-modal-image-container" class="mb-4">
                 <img id="artist-modal-img" src="" alt="Artista" class="hidden mx-auto">
                 <div id="artist-modal-placeholder" class="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center mx-auto border-3 border-brand-500 shadow-lg hidden">
@@ -126,7 +137,6 @@
             
             <h3 class="text-xl font-bold text-white mb-6" id="artist-modal-title">Sigue a ... en</h3>
             
-            <!-- Enlaces dinámicos -->
             <div id="artist-modal-links" class="flex flex-wrap justify-center gap-3"></div>
         </div>
     </div>
@@ -359,14 +369,15 @@
             </div>
         </section>
 
-        <!-- SoundCloud álbum completo -->
+        <!-- SoundCloud: Botón para abrir en nueva pestaña -->
         <section class="glass-panel p-6 rounded-3xl w-full text-center">
-            <h2 class="text-xl font-bold text-white mb-4">Escucha el álbum completo en SoundCloud</h2>
-            <div class="rounded-xl overflow-hidden shadow-lg">
-                <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" 
-                    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/olbaiders-music/sets/olbaiders/s-7eJTfxwwPRm%3Fsi%3D205773ce64504b9aab926e16f880a17f&color=%233b82f6&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-                </iframe>
-            </div>
+            <a href="https://soundcloud.com/olbaiders-music/sets/olbaiders/s-7eJTfxwwPRm?si=205773ce64504b9aab926e16f880a17f" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="soundcloud-btn flex items-center justify-center gap-3 p-5 rounded-xl text-white font-bold text-lg transition-all duration-300 hover:no-underline">
+                <i class="fab fa-soundcloud text-3xl" style="color: #ff5500;"></i>
+                <span>Escucha el álbum completo en SoundCloud</span>
+            </a>
         </section>
         
         <footer class="text-center text-slate-500 text-xs pb-8">
@@ -450,7 +461,6 @@
         ];
 
         function openArtistModal(artistName) {
-            // Cambio: "Sigue a " en lugar de "Siga a "
             artistModalTitle.textContent = "Sigue a " + artistName + " en";
             
             const nombreArchivo = artistName.toLowerCase().replace(/\s+/g, '') + '.jpg';
