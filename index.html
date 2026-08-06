@@ -116,7 +116,7 @@
                 <i class="fas fa-times text-xl"></i>
             </button>
             
-            <!-- Imagen del artista (se mostrará u ocultará dinámicamente) -->
+            <!-- Imagen del artista -->
             <div id="artist-modal-image-container" class="mb-4">
                 <img id="artist-modal-img" src="" alt="Artista" class="hidden mx-auto">
                 <div id="artist-modal-placeholder" class="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center mx-auto border-3 border-brand-500 shadow-lg hidden">
@@ -126,24 +126,8 @@
             
             <h3 class="text-xl font-bold text-white mb-6" id="artist-modal-title">Siga a ... en</h3>
             
-            <div class="grid grid-cols-2 gap-4">
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#E1306C] group text-decoration-none">
-                    <i class="fab fa-instagram text-3xl mb-2 text-[#E1306C]"></i>
-                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Instagram</span>
-                </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-white group text-decoration-none">
-                    <i class="fab fa-twitter text-3xl mb-2 text-white"></i>
-                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Twitter</span>
-                </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00f2fe] group text-decoration-none">
-                    <i class="fab fa-tiktok text-3xl mb-2 text-white"></i>
-                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">TikTok</span>
-                </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1DB954] group text-decoration-none">
-                    <i class="fab fa-spotify text-3xl mb-2 text-[#1DB954]"></i>
-                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Spotify</span>
-                </a>
-            </div>
+            <!-- Enlaces dinámicos -->
+            <div id="artist-modal-links" class="flex flex-wrap justify-center gap-3"></div>
         </div>
     </div>
 
@@ -203,6 +187,7 @@
             <h1 class="text-4xl font-extrabold tracking-tight text-white mb-2">Olbaiders</h1>
         </header>
 
+        <!-- Artistas -->
         <section class="glass-panel p-6 rounded-3xl w-full">
             <h2 class="text-sm uppercase tracking-widest text-slate-400 font-bold mb-5 text-center flex items-center justify-center gap-2">
                 <span class="w-8 h-[1px] bg-slate-600"></span>
@@ -246,14 +231,14 @@
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Prodix</span>
                 </div>
-                <!-- Almatrusko (ahora con foto) -->
+                <!-- Almatrusko -->
                 <div onclick="openArtistModal('Almatrusko')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
                         <img src="almatrusko.jpg" alt="Almatrusko" class="w-full h-full object-cover">
                     </div>
                     <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Almatrusko</span>
                 </div>
-                <!-- KVKR (ahora con foto) -->
+                <!-- KVKR -->
                 <div onclick="openArtistModal('KVKR')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
                     <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
                         <img src="kvkr.jpg" alt="KVKR" class="w-full h-full object-cover">
@@ -263,6 +248,7 @@
             </div>
         </section>
 
+        <!-- Tracklist -->
         <section class="glass-panel p-2 sm:p-4 rounded-3xl w-full">
             <h2 class="text-sm uppercase tracking-widest text-slate-400 font-bold mt-4 mb-4 text-center">Tracklist (Elige un tema)</h2>
             
@@ -372,6 +358,16 @@
                 </button>
             </div>
         </section>
+
+        <!-- Escucha el álbum completo en SoundCloud -->
+        <section class="glass-panel p-6 rounded-3xl w-full text-center">
+            <h2 class="text-xl font-bold text-white mb-4">Escucha el álbum completo en SoundCloud</h2>
+            <div class="rounded-xl overflow-hidden shadow-lg">
+                <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" 
+                    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/olbaiders-music/sets/olbaiders/s-7eJTfxwwPRm%3Fsi%3D205773ce64504b9aab926e16f880a17f&color=%233b82f6&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+                </iframe>
+            </div>
+        </section>
         
         <footer class="text-center text-slate-500 text-xs pb-8">
             <p>&copy; 2026 Olbaid Team</p>
@@ -379,6 +375,7 @@
     </div>
 
     <script>
+        // Modal de plataformas (tracklist)
         const modal = document.getElementById('platform-modal');
         const modalContent = document.getElementById('modal-content');
         const modalTitle = document.getElementById('modal-track-title');
@@ -404,33 +401,64 @@
 
         modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         
+        // Modal de artistas
         const artistModal = document.getElementById('artist-modal');
         const artistModalContent = document.getElementById('artist-modal-content');
         const artistModalTitle = document.getElementById('artist-modal-title');
         const artistModalImg = document.getElementById('artist-modal-img');
         const artistModalPlaceholder = document.getElementById('artist-modal-placeholder');
+        const artistModalLinks = document.getElementById('artist-modal-links');
 
-        // Lista de artistas con foto (nombres en minúsculas, sin tildes)
+        // Datos de enlaces por artista
+        const artistLinks = {
+            "just cy": {
+                yt: "https://www.youtube.com/@JustCyMusic",
+                ig: "https://www.instagram.com/justcymusic/"
+            },
+            "jel kaizen": {
+                yt: "https://www.youtube.com/@JelKaizen",
+                ig: "https://www.instagram.com/jel_nk_2.0/",
+                sc: "https://soundcloud.com/jel-kaizen"
+            },
+            "vinze tremaria": {
+                yt: "https://www.youtube.com/@VinzeTremaria",
+                ig: "https://www.instagram.com/vinzetremaria/",
+                sc: "https://soundcloud.com/yandri-tremaria"
+            },
+            "joivsami": {
+                yt: "https://www.youtube.com/@Joivsami_Music",
+                ig: "https://www.instagram.com/joivsami/",
+                sc: "https://soundcloud.com/joivsami"
+            },
+            "prodix": {
+                yt: "https://www.youtube.com/@goodbv1528bv",
+                sc: "https://soundcloud.com/good1528-bv"
+            },
+            "almatrusko": {
+                yt: "https://www.youtube.com/@almatrusko89",
+                sc: "https://soundcloud.com/lion-887410719"
+            },
+            "kvkr": {
+                yt: "https://www.youtube.com/@KVKR_KVKR_KVKR",
+                ig: "https://www.instagram.com/mastica_ojos9000",
+                sc: "https://soundcloud.com/kvkr"
+            }
+        };
+
+        // Lista de artistas con foto
         const artistasConFoto = [
-            'just cy',
-            'jel kaizen',
-            'vinze tremaria',   // corregido
-            'joivsami',
-            'prodix',
-            'almatrusko',
-            'kvkr'
+            'just cy', 'jel kaizen', 'vinze tremaria', 'joivsami',
+            'prodix', 'almatrusko', 'kvkr'
         ];
 
         function openArtistModal(artistName) {
             artistModalTitle.textContent = "Siga a " + artistName + " en";
             
+            // Imagen
             const nombreArchivo = artistName.toLowerCase().replace(/\s+/g, '') + '.jpg';
             const tieneFoto = artistasConFoto.includes(artistName.toLowerCase());
-            
-            // Ocultar ambos inicialmente
             artistModalImg.classList.add('hidden');
             artistModalPlaceholder.classList.add('hidden');
-            
             if (tieneFoto) {
                 artistModalImg.src = nombreArchivo;
                 artistModalImg.classList.remove('hidden');
@@ -438,6 +466,40 @@
                 artistModalPlaceholder.classList.remove('hidden');
             }
             
+            // Enlaces
+            const links = artistLinks[artistName.toLowerCase()];
+            artistModalLinks.innerHTML = '';
+            if (links) {
+                const plataformas = [
+                    { key: 'yt', icon: 'fa-youtube', color: '#FF0000', label: 'YouTube' },
+                    { key: 'ig', icon: 'fa-instagram', color: '#E1306C', label: 'Instagram' },
+                    { key: 'sc', icon: 'fa-soundcloud', color: '#ff5500', label: 'SoundCloud' }
+                ];
+                
+                plataformas.forEach(p => {
+                    if (links[p.key]) {
+                        const a = document.createElement('a');
+                        a.href = links[p.key];
+                        a.target = '_blank';
+                        a.rel = 'noopener';
+                        a.className = 'platform-btn flex flex-col items-center justify-center p-3 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-' + (p.key === 'yt' ? '[#FF0000]' : (p.key === 'ig' ? '[#E1306C]' : '[#ff5500]')) + ' group text-decoration-none w-24';
+                        a.style.transition = 'all 0.2s';
+                        a.innerHTML = `
+                            <i class="fab ${p.icon} text-2xl mb-1" style="color: ${p.color}"></i>
+                            <span class="text-xs font-medium text-slate-300 group-hover:text-white">${p.label}</span>
+                        `;
+                        artistModalLinks.appendChild(a);
+                    }
+                });
+                
+                if (artistModalLinks.children.length === 0) {
+                    artistModalLinks.innerHTML = '<p class="text-slate-400 text-sm">Próximamente más enlaces</p>';
+                }
+            } else {
+                artistModalLinks.innerHTML = '<p class="text-slate-400 text-sm">No hay enlaces disponibles</p>';
+            }
+            
+            // Mostrar modal
             artistModal.classList.remove('opacity-0', 'invisible');
             setTimeout(() => {
                 artistModalContent.classList.remove('scale-95');
