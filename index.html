@@ -124,7 +124,7 @@
                 </div>
             </div>
             
-            <h3 class="text-xl font-bold text-white mb-6" id="artist-modal-title">Siga a ... en</h3>
+            <h3 class="text-xl font-bold text-white mb-6" id="artist-modal-title">Sigue a ... en</h3>
             
             <!-- Enlaces dinámicos -->
             <div id="artist-modal-links" class="flex flex-wrap justify-center gap-3"></div>
@@ -359,7 +359,7 @@
             </div>
         </section>
 
-        <!-- Escucha el álbum completo en SoundCloud -->
+        <!-- SoundCloud álbum completo -->
         <section class="glass-panel p-6 rounded-3xl w-full text-center">
             <h2 class="text-xl font-bold text-white mb-4">Escucha el álbum completo en SoundCloud</h2>
             <div class="rounded-xl overflow-hidden shadow-lg">
@@ -409,7 +409,6 @@
         const artistModalPlaceholder = document.getElementById('artist-modal-placeholder');
         const artistModalLinks = document.getElementById('artist-modal-links');
 
-        // Datos de enlaces por artista
         const artistLinks = {
             "just cy": {
                 yt: "https://www.youtube.com/@JustCyMusic",
@@ -445,16 +444,15 @@
             }
         };
 
-        // Lista de artistas con foto
         const artistasConFoto = [
             'just cy', 'jel kaizen', 'vinze tremaria', 'joivsami',
             'prodix', 'almatrusko', 'kvkr'
         ];
 
         function openArtistModal(artistName) {
-            artistModalTitle.textContent = "Siga a " + artistName + " en";
+            // Cambio: "Sigue a " en lugar de "Siga a "
+            artistModalTitle.textContent = "Sigue a " + artistName + " en";
             
-            // Imagen
             const nombreArchivo = artistName.toLowerCase().replace(/\s+/g, '') + '.jpg';
             const tieneFoto = artistasConFoto.includes(artistName.toLowerCase());
             artistModalImg.classList.add('hidden');
@@ -466,7 +464,6 @@
                 artistModalPlaceholder.classList.remove('hidden');
             }
             
-            // Enlaces
             const links = artistLinks[artistName.toLowerCase()];
             artistModalLinks.innerHTML = '';
             if (links) {
@@ -499,7 +496,6 @@
                 artistModalLinks.innerHTML = '<p class="text-slate-400 text-sm">No hay enlaces disponibles</p>';
             }
             
-            // Mostrar modal
             artistModal.classList.remove('opacity-0', 'invisible');
             setTimeout(() => {
                 artistModalContent.classList.remove('scale-95');
