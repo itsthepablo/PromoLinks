@@ -40,19 +40,47 @@
     
     <style>
         body {
-            background-color: #0f172a;
+            background-color: #06040a; /* Tono negro-violeta ultra oscuro inspirado en la portada */
             color: #f8fafc;
-            background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
-                              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
-            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Movimiento orbital lento para las nebulosas de fondo */
+        @keyframes nebula-drift-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(6%, -8%) scale(1.08); }
+        }
+        @keyframes nebula-drift-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-8%, 6%) scale(1.04); }
+        }
+        @keyframes nebula-drift-3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(4%, 8%) scale(1.1); }
+        }
+        .animate-nebula-slow {
+            animation: nebula-drift-1 25s ease-in-out infinite;
+        }
+        .animate-nebula-medium {
+            animation: nebula-drift-2 20s ease-in-out infinite;
+        }
+        .animate-nebula-fast {
+            animation: nebula-drift-3 28s ease-in-out infinite;
         }
         
         .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%),
+                        rgba(10, 8, 20, 0.35); /* Mezcla de acrílico ultra transparente y oscuro para legibilidad */
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Separadores acrílicos más sutiles en el tracklist */
+        .track-item + div {
+            background-color: rgba(255, 255, 255, 0.05) !important;
         }
 
         .artist-circle {
@@ -62,6 +90,43 @@
             transform: scale(1.1);
             border-color: #3b82f6;
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Celular Mockup y Animación 3D */
+        .animate-phone {
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(-16deg) rotateX(12deg) rotateZ(-4deg);
+            animation: phone-float 6s ease-in-out infinite;
+            box-shadow: -15px 15px 35px rgba(0, 0, 0, 0.55), -5px 5px 15px rgba(0, 0, 0, 0.35);
+        }
+        
+        @keyframes phone-float {
+            0%, 100% {
+                transform: perspective(1000px) rotateY(-16deg) rotateX(12deg) rotateZ(-4deg) translateY(0);
+                box-shadow: -15px 15px 35px rgba(0, 0, 0, 0.55), -5px 5px 15px rgba(0, 0, 0, 0.35);
+            }
+            50% {
+                transform: perspective(1000px) rotateY(-12deg) rotateX(8deg) rotateZ(-2deg) translateY(-12px);
+                box-shadow: -25px 25px 45px rgba(0, 0, 0, 0.45), -10px 10px 25px rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        /* Giro del texto circular */
+        .animate-spin-slow {
+            animation: spin-clockwise 30s linear infinite;
+        }
+        @keyframes spin-clockwise {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Ocultar barra de scroll en el carrusel de artistas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .track-item {
@@ -117,9 +182,30 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 25px -5px rgba(255, 85, 0, 0.3);
         }
+
+        /* Ajustar foto de KVKR para que no se corte y se integre con fondo blanco */
+        img[src*="kvkr.jpg"] {
+            object-fit: contain !important;
+            background-color: #ffffff;
+        }
+
+        /* Forzar que el logo de Tidal sea blanco en el tema oscuro */
+        img[src*="Tidal.png"] {
+            filter: brightness(0) invert(1);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-6 relative overflow-x-hidden text-slate-200 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Fondo Animado: Nebulosa y Estrellas -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" id="space-bg">
+        <!-- Manchas de nebulosa difuminadas en rosa/magenta, azul y púrpura (degradados que se mueven) -->
+        <div class="absolute w-[80vmax] h-[80vmax] rounded-full bg-[radial-gradient(circle,rgba(219,39,119,0.07)_0%,transparent_70%)] -top-[20%] -left-[20%] animate-nebula-slow"></div>
+        <div class="absolute w-[70vmax] h-[70vmax] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.07)_0%,transparent_70%)] bottom-[10%] right-[5%] animate-nebula-medium"></div>
+        <div class="absolute w-[60vmax] h-[60vmax] rounded-full bg-[radial-gradient(circle,rgba(162,56,255,0.05)_0%,transparent_70%)] top-[40%] right-[30%] animate-nebula-fast"></div>
+        <!-- Canvas para las partículas flotantes -->
+        <canvas id="stars-canvas" class="absolute inset-0 w-full h-full"></canvas>
+    </div>
 
     <!-- Modal de Artistas (Redes Sociales) -->
     <div id="artist-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible transition-all duration-300">
@@ -157,27 +243,23 @@
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Spotify</span>
                 </a>
                 <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FA243C] group text-decoration-none">
-                    <i class="fab fa-apple text-3xl mb-2 text-white"></i>
+                    <img src="AppleMusic.png" alt="Apple Music" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Apple Music</span>
                 </a>
                 <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FF0000] group text-decoration-none">
                     <i class="fab fa-youtube text-3xl mb-2 text-[#FF0000]"></i>
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">YouTube</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-white group text-decoration-none">
-                    <svg viewBox="0 0 24 24" class="w-8 h-8 mb-2 fill-current text-white">
-                        <path d="M12.012 3.992L8.008 8l4.004 4.004 4.004-4.004-4.004-4.004zm-8.01 8.006L0 16.002l4.002 4.004 4.002-4.004-4.002-4.004zm16.016 0l-4.004 4.004 4.004 4.004 4.004-4.004-4.004-4.004zm-8.006 8.004l-4.004 4.004 4.004 4.004 4.004-4.004-4.004-4.004z"/>
-                    </svg>
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00FFD2] group text-decoration-none">
+                    <img src="Tidal.png" alt="Tidal" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Tidal</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00A8E1] group text-decoration-none">
-                    <svg viewBox="0 0 24 24" class="w-8 h-8 mb-2 fill-current text-[#00A8E1]">
-                        <path d="M11.583 14.86c-.529.336-1.294.639-2.143.639-1.807 0-3.075-.924-3.075-2.714 0-1.94 1.479-2.773 3.596-2.714h1.538v-.924c0-.84-.26-1.462-1.462-1.462-.84 0-1.571.294-2.101.697l-.84-1.37c.731-.555 1.84-1.042 3.226-1.042 2.226 0 3.134 1.126 3.134 3.05v3.529c0 .74.202 1.244.47 1.588v.639h-1.806c-.143-.336-.235-.714-.294-1.11zm-1.538-3.067h-1.361c-1.05-.025-1.765.403-1.765 1.294 0 .815.622 1.26 1.462 1.26.79 0 1.37-.37 1.664-.84v-1.714zm10.083-2.31c0-1.866-.882-3.135-2.454-3.135-1.512 0-2.436.958-2.823 1.95v-1.85h-1.933v9.06h1.933v-4.942c0-1.294.756-1.916 1.596-1.916.924 0 1.513.622 1.513 1.68v5.178h1.933V9.482h.034c.067-1.126.857-1.849 1.781-1.849.924 0 1.58.588 1.58 1.68v5.178h1.932v-5.463c0-1.798-.874-3.135-2.437-3.135-1.126 0-1.983.588-2.47 1.563-.404-.975-1.31-1.563-2.454-1.563-1.008 0-1.815.487-2.285 1.277h-.017v-1.16H15.82v8.908h1.932v-4.942c0-1.294.756-1.916 1.597-1.916.924 0 1.512.622 1.512 1.68v5.178h1.933V9.482zM4.148 18.006c3.277 2.143 8.353 2.765 12.167 1.496-1.428 1.109-4.32 1.866-7.85 1.513-2.268-.227-4.486-1.126-5.713-2.353l1.395-.656z"/>
-                    </svg>
+                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1A98FF] group text-decoration-none">
+                    <img src="AmazonMusic.png" alt="Amazon Music" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Amazon Music</span>
                 </a>
                 <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#A238FF] group text-decoration-none">
-                    <i class="fab fa-deezer text-3xl mb-2 text-[#A238FF]"></i>
+                    <img src="Deezer.png" alt="Deezer" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Deezer</span>
                 </a>
             </div>
@@ -185,76 +267,174 @@
     </div>
 
     <!-- Contenedor Principal -->
-    <div class="w-full max-w-lg mx-auto z-10 flex flex-col gap-8">
+    <div class="w-full max-w-lg sm:max-w-xl md:max-w-2xl mx-auto z-10 flex flex-col gap-8">
         
-        <header class="text-center animate-float pt-4">
-            <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto mb-6">
-                <div class="absolute inset-0 bg-brand-500 rounded-2xl blur-xl opacity-30 animate-pulse-slow"></div>
-                <img src="portada.png" 
-                     alt="Portada del Álbum Olbaiders" 
-                     class="relative w-full h-full object-cover rounded-2xl shadow-2xl border border-slate-700/50 z-10">
+        <!-- Header: Portada en Celular 3D con Halo de Texto Circular y Título -->
+        <header class="text-center pt-4">
+            
+            <!-- Contenedor del Celular y Texto Circular -->
+            <div class="relative w-72 h-[340px] sm:w-[480px] sm:h-[440px] mx-auto flex items-center justify-center mb-6 mt-4 overflow-visible">
+                
+                <!-- SVG de Texto Circular Giratorio -->
+                <svg viewBox="0 0 300 300" class="absolute w-[330px] h-[330px] sm:w-[460px] sm:h-[460px] pointer-events-none animate-spin-slow z-0">
+                    <defs>
+                        <path id="textCirclePath" d="M 150, 150 m -120, 0 a 120,120 0 1,1 240,0 a 120,120 0 1,1 -240,0" />
+                    </defs>
+                    <!-- Círculo guía punteado -->
+                    <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(59, 130, 246, 0.15)" stroke-width="0.75" stroke-dasharray="4 4" />
+                    <circle cx="150" cy="150" r="130" fill="none" stroke="rgba(59, 130, 246, 0.05)" stroke-width="0.5" />
+                    <text class="fill-slate-400/30 font-bold uppercase tracking-widest" style="font-size: 6.8px; font-family: 'Inter', sans-serif;">
+                        <textPath href="#textCirclePath" startOffset="0%">
+                            OLBAIDERS • JUST CY • JEL KAIZEN • VINZE TREMARIA • JOIVSAMI • PRODIX • ALMATRUSKO • KVKR • OLBAIDERS • JUST CY • JEL KAIZEN • VINZE TREMARIA • JOIVSAMI • PRODIX • ALMATRUSKO • KVKR •
+                        </textPath>
+                    </text>
+                </svg>
+                
+                <!-- Celular Mockup (Centrado) -->
+                <div class="relative w-44 h-80 sm:w-56 sm:h-[380px] rounded-[36px] border-[5px] border-slate-800 bg-slate-950 shadow-2xl z-10 flex flex-col overflow-hidden animate-phone select-none">
+                    
+                    <!-- Notch del Teléfono -->
+                    <div class="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-3 bg-slate-800 rounded-full z-20 flex items-center justify-center">
+                        <div class="w-1 h-1 rounded-full bg-slate-900 mr-2"></div>
+                        <div class="w-3 h-0.5 bg-slate-900 rounded-full"></div>
+                    </div>
+                    
+                    <!-- Pantalla del Celular -->
+                    <div class="w-full h-full bg-[#0a0f1d] rounded-[28px] overflow-hidden flex flex-col justify-between p-3 relative text-left">
+                        
+                        <!-- Barra de Estado (Top) -->
+                        <div class="flex justify-between items-center text-[7px] sm:text-[9px] text-slate-500 pt-1 pb-2 px-1">
+                            <span class="font-semibold">9:41</span>
+                            <div class="flex items-center gap-1">
+                                <i class="fas fa-signal"></i>
+                                <i class="fas fa-wifi"></i>
+                                <i class="fas fa-battery-three-quarters"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Reproductor de Música -->
+                        <div class="flex-1 flex flex-col justify-center gap-3 my-auto">
+                            <!-- Arte del Álbum (Cuadrado) -->
+                            <div class="w-full aspect-square rounded-2xl overflow-hidden shadow-lg border border-slate-800/80 relative group/art">
+                                <img src="portada.png" alt="Olbaiders" class="w-full h-full object-cover">
+                                <!-- Capa de brillo en el reproductor -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                            </div>
+                            
+                            <!-- Info de la canción -->
+                            <div class="px-1 text-center">
+                                <h4 id="phone-track-title" class="text-[10px] sm:text-xs font-bold text-white tracking-wide truncate">Evil Moonlight</h4>
+                                <p id="phone-track-artist" class="text-[8px] sm:text-[10px] text-slate-500 truncate mt-0.5">Just Cy</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Controles de Audio (Bottom) -->
+                        <div class="w-full flex flex-col gap-2 pt-2 pb-1 px-1">
+                            <!-- Barra de progreso -->
+                            <div class="w-full h-[3px] bg-slate-800 rounded-full relative">
+                                <div id="phone-progress-fill" class="absolute left-0 top-0 w-0 h-full bg-brand-500 rounded-full" style="transition: width 1s linear;"></div>
+                            </div>
+                            <!-- Tiempos -->
+                            <div class="flex justify-between text-[7px] sm:text-[8px] text-slate-600">
+                                <span id="phone-time-elapsed">0:00</span>
+                                <span id="phone-time-duration">1:51</span>
+                            </div>
+                            <!-- Botones del Reproductor -->
+                            <div class="flex justify-center items-center gap-4 text-xs sm:text-sm text-slate-400 py-1">
+                                <button class="hover:text-white transition-colors text-[9px] sm:text-xs"><i class="fas fa-backward-step"></i></button>
+                                <button class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-brand-500 text-white flex items-center justify-center hover:bg-brand-600 transition-all shadow-md"><i class="fas fa-play text-[9px] sm:text-[10px] ml-0.5"></i></button>
+                                <button class="hover:text-white transition-colors text-[9px] sm:text-xs"><i class="fas fa-forward-step"></i></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
+            
             <h1 class="text-4xl font-extrabold tracking-tight text-white mb-2">Olbaiders</h1>
         </header>
 
-        <!-- Artistas -->
-        <section class="glass-panel p-6 rounded-3xl w-full">
-            <h2 class="text-sm uppercase tracking-widest text-slate-400 font-bold mb-5 text-center flex items-center justify-center gap-2">
-                <span class="w-8 h-[1px] bg-slate-600"></span>
-                Artistas
-                <span class="w-8 h-[1px] bg-slate-600"></span>
+        <!-- Carrusel de Artistas Colaboradores -->
+        <section class="glass-panel p-4 rounded-3xl w-full flex flex-col gap-3">
+            <h2 class="text-xs uppercase tracking-widest text-slate-400 font-bold text-center flex items-center justify-center gap-2">
+                <span class="w-8 h-[1px] bg-slate-700"></span>
+                Colaboradores
+                <span class="w-8 h-[1px] bg-slate-700"></span>
             </h2>
             
-            <div class="flex flex-wrap justify-center gap-3 sm:gap-4 max-w-[280px] sm:max-w-[340px] mx-auto">
+            <!-- Contenedor Deslizable Horizontal -->
+            <div class="flex items-center gap-4 overflow-x-auto pb-2 pt-2 px-2 no-scrollbar scroll-smooth snap-x">
+                
                 <!-- Just Cy -->
-                <div onclick="openArtistModal('Just Cy')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('Just Cy')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="justcy.jpg" alt="Just Cy" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Just Cy</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        Just Cy
+                    </span>
                 </div>
+                
                 <!-- Jel Kaizen -->
-                <div onclick="openArtistModal('Jel Kaizen')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('Jel Kaizen')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="jelkaizen.jpg" alt="Jel Kaizen" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Jel Kaizen</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        Jel Kaizen
+                    </span>
                 </div>
+                
                 <!-- Vinze Tremaria -->
-                <div onclick="openArtistModal('Vinze Tremaria')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('Vinze Tremaria')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="vinzetremaria.jpg" alt="Vinze Tremaria" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Vinze Tremaria</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        Vinze Tremaria
+                    </span>
                 </div>
+                
                 <!-- Joivsami -->
-                <div onclick="openArtistModal('Joivsami')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('Joivsami')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="joivsami.jpg" alt="Joivsami" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Joivsami</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        Joivsami
+                    </span>
                 </div>
+                
                 <!-- Prodix -->
-                <div onclick="openArtistModal('Prodix')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('Prodix')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="prodix.jpg" alt="Prodix" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Prodix</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        Prodix
+                    </span>
                 </div>
+                
                 <!-- Almatrusko -->
-                <div onclick="openArtistModal('Almatrusko')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('Almatrusko')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="almatrusko.jpg" alt="Almatrusko" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">Almatrusko</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        Almatrusko
+                    </span>
                 </div>
+                
                 <!-- KVKR -->
-                <div onclick="openArtistModal('KVKR')" class="flex flex-col items-center group cursor-pointer transition-transform hover:-translate-y-1">
-                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-1 bg-slate-800">
+                <div onclick="openArtistModal('KVKR')" class="flex flex-col items-center group cursor-pointer shrink-0 snap-center">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-slate-600 overflow-hidden artist-circle mb-2 bg-slate-800 shadow-md">
                         <img src="kvkr.jpg" alt="KVKR" class="w-full h-full object-cover">
                     </div>
-                    <span class="text-[10px] text-slate-400 group-hover:text-white transition-colors">KVKR</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors bg-slate-800/40 px-2.5 py-0.5 rounded-full border border-slate-700/30 shadow-sm">
+                        KVKR
+                    </span>
                 </div>
+                
             </div>
         </section>
 
@@ -527,6 +707,176 @@
 
         artistModal.addEventListener('click', (e) => { if (e.target === artistModal) closeArtistModal(); });
         
+        // Automatización del reproductor del Celular 3D
+        const phoneTracks = [
+            { title: "Evil Moonlight", artist: "Just Cy", duration: "1:51" },
+            { title: "Forjar La Espada", artist: "Jel Kaizen & Vinze Tremaria", duration: "3:14" },
+            { title: "Jardín Del EdeM", artist: "Vinze Tremaria", duration: "3:53" },
+            { title: "Ocean Spiral", artist: "Joivsami", duration: "2:35" },
+            { title: "Inesperante", artist: "Prodix", duration: "2:57" },
+            { title: "Sueño Tibetano", artist: "Almatrusko", duration: "5:03" },
+            { title: "Seguir Fallando Para Crecer", artist: "KVKR", duration: "6:15" }
+        ];
+
+        let currentTrackIdx = 0;
+        let elapsedSeconds = 0;
+        const TRACK_DISPLAY_DURATION = 6; // Segundos que dura cada canción en el reproductor antes de cambiar
+
+        const phoneTrackTitle = document.getElementById('phone-track-title');
+        const phoneTrackArtist = document.getElementById('phone-track-artist');
+        const phoneProgressFill = document.getElementById('phone-progress-fill');
+        const phoneTimeElapsed = document.getElementById('phone-time-elapsed');
+        const phoneTimeDuration = document.getElementById('phone-time-duration');
+
+        // Configurar transición inicial de opacidad
+        if (phoneTrackTitle && phoneTrackArtist) {
+            phoneTrackTitle.style.transition = 'opacity 0.25s ease';
+            phoneTrackArtist.style.transition = 'opacity 0.25s ease';
+        }
+
+        function updatePhonePlayer() {
+            const track = phoneTracks[currentTrackIdx];
+            
+            if (phoneTrackTitle && phoneTrackArtist && phoneTimeDuration) {
+                // Efecto de desvanecimiento al cambiar canción
+                phoneTrackTitle.style.opacity = 0;
+                phoneTrackArtist.style.opacity = 0;
+                
+                setTimeout(() => {
+                    phoneTrackTitle.textContent = track.title;
+                    phoneTrackArtist.textContent = track.artist;
+                    phoneTimeDuration.textContent = track.duration;
+                    phoneTrackTitle.style.opacity = 1;
+                    phoneTrackArtist.style.opacity = 1;
+                }, 250);
+            }
+            
+            if (phoneProgressFill && phoneTimeElapsed) {
+                // Reiniciar progreso instantáneamente sin animación de retroceso
+                phoneProgressFill.style.transition = 'none';
+                phoneProgressFill.style.width = '0%';
+                // Forzar reflow en el DOM
+                phoneProgressFill.offsetHeight;
+                // Reactivar animación de deslizamiento hacia adelante
+                phoneProgressFill.style.transition = 'width 1s linear';
+                
+                elapsedSeconds = 0;
+                phoneTimeElapsed.textContent = "0:00";
+            }
+        }
+
+        function formatTime(secs) {
+            const m = Math.floor(secs / 60);
+            const s = secs % 60;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        setInterval(() => {
+            elapsedSeconds++;
+            if (elapsedSeconds >= TRACK_DISPLAY_DURATION) {
+                currentTrackIdx = (currentTrackIdx + 1) % phoneTracks.length;
+                updatePhonePlayer();
+            } else {
+                if (phoneTimeElapsed) {
+                    phoneTimeElapsed.textContent = formatTime(elapsedSeconds);
+                }
+                if (phoneProgressFill) {
+                    const percent = (elapsedSeconds / TRACK_DISPLAY_DURATION) * 100;
+                    phoneProgressFill.style.width = percent + '%';
+                }
+            }
+        }, 1000);
+
+        // Inicializar el reproductor
+        updatePhonePlayer();
+
+        // Sistema de Partículas (Estrellas/Nebulosa)
+        const canvas = document.getElementById('stars-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let stars = [];
+            const numStars = window.innerWidth < 640 ? 60 : 130;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                initStars();
+            }
+
+            class Star {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.6 + 0.3;
+                    
+                    const colors = [
+                        'rgba(255, 255, 255, ',   // Blanco
+                        'rgba(59, 130, 246, ',   // Azul/Cian
+                        'rgba(219, 39, 119, ',   // Rosa/Magenta
+                        'rgba(162, 56, 255, '    // Violeta
+                    ];
+                    
+                    const rand = Math.random();
+                    if (rand < 0.7) {
+                        this.baseColor = colors[0];
+                    } else if (rand < 0.8) {
+                        this.baseColor = colors[1];
+                    } else if (rand < 0.9) {
+                        this.baseColor = colors[2];
+                    } else {
+                        this.baseColor = colors[3];
+                    }
+                    
+                    this.alpha = Math.random();
+                    this.twinkleSpeed = Math.random() * 0.015 + 0.005;
+                    this.dx = (Math.random() - 0.5) * 0.12;
+                    this.dy = (Math.random() - 0.5) * 0.12;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.baseColor + this.alpha + ')';
+                    ctx.fill();
+                }
+
+                update() {
+                    this.alpha += this.twinkleSpeed;
+                    if (this.alpha > 1 || this.alpha < 0.1) {
+                        this.twinkleSpeed = -this.twinkleSpeed;
+                    }
+                    
+                    this.x += this.dx;
+                    this.y += this.dy;
+
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                    if (this.y > canvas.height) this.y = 0;
+                }
+            }
+
+            function initStars() {
+                stars = [];
+                for (let i = 0; i < numStars; i++) {
+                    stars.push(new Star());
+                }
+            }
+
+            function animateStars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                stars.forEach(star => {
+                    star.update();
+                    star.draw();
+                });
+                requestAnimationFrame(animateStars);
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            animateStars();
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.key === "Escape") {
                 if (!modal.classList.contains('invisible')) closeModal();
