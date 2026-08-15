@@ -238,27 +238,27 @@
             </div>
             
             <div class="grid grid-cols-2 gap-4">
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1DB954] group text-decoration-none">
+                <a id="modal-link-spotify" href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1DB954] group text-decoration-none">
                     <i class="fab fa-spotify text-3xl mb-2 text-[#1DB954]"></i>
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Spotify</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FA243C] group text-decoration-none">
+                <a id="modal-link-apple" href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FA243C] group text-decoration-none">
                     <img src="AppleMusic.png" alt="Apple Music" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Apple Music</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FF0000] group text-decoration-none">
+                <a id="modal-link-youtube" href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#FF0000] group text-decoration-none">
                     <i class="fab fa-youtube text-3xl mb-2 text-[#FF0000]"></i>
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">YouTube</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00FFD2] group text-decoration-none">
+                <a id="modal-link-tidal" href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#00FFD2] group text-decoration-none">
                     <img src="Tidal.png" alt="Tidal" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Tidal</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1A98FF] group text-decoration-none">
+                <a id="modal-link-amazon" href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#1A98FF] group text-decoration-none">
                     <img src="AmazonMusic.png" alt="Amazon Music" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Amazon Music</span>
                 </a>
-                <a href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#A238FF] group text-decoration-none">
+                <a id="modal-link-deezer" href="#" class="platform-btn flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-[#A238FF] group text-decoration-none">
                     <img src="Deezer.png" alt="Deezer" class="h-8 mb-2 object-contain">
                     <span class="text-sm font-medium text-slate-300 group-hover:text-white">Deezer</span>
                 </a>
@@ -571,8 +571,96 @@
         const modalContent = document.getElementById('modal-content');
         const modalTitle = document.getElementById('modal-track-title');
 
+        // Enlaces de plataformas para cada canción del álbum
+        const trackLinks = {
+            "evil moonlight": {
+                spotify: "#",
+                apple: "#",
+                youtube: "#",
+                tidal: "#",
+                amazon: "#",
+                deezer: "#"
+            },
+            "forjar la espada": {
+                spotify: "#",
+                apple: "#",
+                youtube: "#",
+                tidal: "#",
+                amazon: "#",
+                deezer: "#"
+            },
+            "jardin del edem": {
+                spotify: "#",
+                apple: "#",
+                youtube: "#",
+                tidal: "#",
+                amazon: "#",
+                deezer: "#"
+            },
+            "ocean spiral": {
+                spotify: "https://open.spotify.com/intl-es/track/02BzzL5gs4LwqhbL1LbGQB?si=bfb53d56348b4d52",
+                apple: "https://music.apple.com/au/song/ocean-spiral/6798389119",
+                youtube: "https://youtu.be/eY749cyI-KM?si=KtfZk_LI8RGWTt3j",
+                tidal: "https://tidal.com/track/549540164/u",
+                amazon: "https://music.amazon.com/tracks/B0HD2T8T3T?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_0GEO4v8GPVK68cTwftb417wAO",
+                deezer: "https://link.deezer.com/s/347q0gKR24Bv40ssCNu3u"
+            },
+            "inesperante": {
+                spotify: "#",
+                apple: "#",
+                youtube: "#",
+                tidal: "#",
+                amazon: "#",
+                deezer: "#"
+            },
+            "sueno tibetano": {
+                spotify: "#",
+                apple: "#",
+                youtube: "#",
+                tidal: "#",
+                amazon: "#",
+                deezer: "#"
+            },
+            "seguir fallando para crecer": {
+                spotify: "#",
+                apple: "#",
+                youtube: "#",
+                tidal: "#",
+                amazon: "#",
+                deezer: "#"
+            }
+        };
+
         function openModal(trackName) {
-            modalTitle.textContent = "Escuchar: " + trackName.split('. ')[1];
+            const trackTitle = trackName.split('. ')[1];
+            modalTitle.textContent = "Escuchar: " + trackTitle;
+            
+            // Normalizar texto (pasar a minúsculas, remover tildes y espacios extras)
+            const cleanName = trackTitle.toLowerCase()
+                                        .normalize("NFD")
+                                        .replace(/[\u0300-\u036f]/g, "")
+                                        .trim();
+            
+            const links = trackLinks[cleanName];
+            
+            // Asignar enlaces correspondientes y opacidad si no están disponibles
+            const platforms = ['spotify', 'apple', 'youtube', 'tidal', 'amazon', 'deezer'];
+            platforms.forEach(p => {
+                const btn = document.getElementById(`modal-link-${p}`);
+                if (btn) {
+                    const url = (links && links[p]) ? links[p] : '#';
+                    btn.href = url;
+                    
+                    if (url === '#') {
+                        btn.setAttribute('target', '_self');
+                        btn.classList.add('opacity-40', 'pointer-events-none');
+                    } else {
+                        btn.setAttribute('target', '_blank');
+                        btn.classList.remove('opacity-40', 'pointer-events-none');
+                    }
+                }
+            });
+
             modal.classList.remove('opacity-0', 'invisible');
             setTimeout(() => {
                 modalContent.classList.remove('scale-95');
