@@ -137,9 +137,7 @@
             transform: translateX(5px);
         }
 
-        #platform-modal {
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
+
         .platform-btn {
             transition: all 0.2s;
         }
@@ -208,8 +206,8 @@
     </div>
 
     <!-- Modal de Artistas (Redes Sociales) -->
-    <div id="artist-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible transition-all duration-300">
-        <div class="glass-panel p-6 sm:p-8 rounded-2xl w-full max-w-sm transform scale-95 transition-transform duration-300 text-center" id="artist-modal-content">
+    <div id="artist-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible transition-[opacity,visibility] duration-300">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl w-[90%] max-w-sm transform scale-95 transition-transform duration-300 text-center" id="artist-modal-content">
             <button onclick="closeArtistModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white focus:outline-none transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
@@ -228,8 +226,8 @@
     </div>
 
     <!-- Modal de Plataformas (para cada canción) -->
-    <div id="platform-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible">
-        <div class="glass-panel p-6 sm:p-8 rounded-2xl w-full max-w-sm transform scale-95 transition-transform duration-300" id="modal-content">
+    <div id="platform-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 invisible transition-[opacity,visibility] duration-300">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl w-[90%] max-w-sm transform scale-95 transition-transform duration-300" id="modal-content">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-white" id="modal-track-title">Selecciona plataforma</h3>
                 <button onclick="closeModal()" class="text-slate-400 hover:text-white focus:outline-none transition-colors">
@@ -582,20 +580,20 @@
                 deezer: "#"
             },
             "forjar la espada": {
-                spotify: "#",
-                apple: "#",
-                youtube: "#",
-                tidal: "#",
-                amazon: "#",
-                deezer: "#"
+                spotify: "https://open.spotify.com/track/7ByKpsY04iHVWsAjEZJk4P?si=RzIsPXyZTKiR_DcM5XZXBA&utm_source=copy-link&sci=spotify%3Acard-config%3A5Qpu4omKYQRH5OMqli1NCw",
+                apple: "https://music.apple.com/ar/song/forjar-la-espada/6798388994",
+                youtube: "https://youtu.be/VTM7DqON7rw?si=Kis8AOo-YKV7eXq-",
+                tidal: "https://tidal.com/track/549540162/u",
+                amazon: "https://music.amazon.com/tracks/B0HD2M8YLJ?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_8EJZZEfUE7DPRs9ZmpJ38aFB9",
+                deezer: "https://link.deezer.com/s/347RzkYXP6U6CGhffMxIb"
             },
             "jardin del edem": {
-                spotify: "#",
-                apple: "#",
-                youtube: "#",
-                tidal: "#",
-                amazon: "#",
-                deezer: "#"
+                spotify: "https://open.spotify.com/track/160UKZUT2IEirEQ0zlkYjZ?si=Bf6OhyCTQ5iI_TVY3kH9Iw&utm_source=copy-link&sci=spotify%3Acard-config%3A47jTmIPHx7HU4kNKIofaOI",
+                apple: "https://music.apple.com/us/song/jard%C3%ADn-del-edem/6798389118",
+                youtube: "https://music.youtube.com/watch?v=tUTxKdNuC88&si=Y6-Esbv-1ieHGcOu",
+                tidal: "https://tidal.com/track/549540163/u",
+                amazon: "https://amazon.com/music/player/tracks/B0HD2K6RKD?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_7FsuZWYHBvx6vIu8Ewh5lalox",
+                deezer: "https://link.deezer.com/s/347RBRUWceK32Ld8UlGs0"
             },
             "ocean spiral": {
                 spotify: "https://open.spotify.com/intl-es/track/02BzzL5gs4LwqhbL1LbGQB?si=bfb53d56348b4d52",
